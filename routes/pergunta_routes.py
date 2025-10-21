@@ -12,6 +12,37 @@ router = APIRouter(
 )
 service = PerguntaService()
 
+@router.get(
+    "/ultima",
+    summary="Obter última pergunta criada",
+    description="Retorna a última pergunta criada no sistema.",
+    response_description="Dados da última pergunta"
+)
+def buscar_ultima_pergunta():
+    """
+    ## 🕑 Obter Última Pergunta Criada
+    
+    Retorna a última pergunta criada no sistema.
+    
+    ### Exemplo de uso:
+    ```
+    GET /perguntas/ultima
+    ```
+    
+    ### Resposta:
+    ```json
+    {
+        "pergunta_id": "b2c3d4e5f6a1",
+        "texto": "Você ficou satisfeito com nosso atendimento?",
+        "data_criacao": "2025-01-13T02:30:00.123456"
+    }
+    ```
+    """
+    pergunta = service.buscar_ultima_pergunta()
+    if not pergunta:
+        raise HTTPException(status_code=404, detail="Nenhuma pergunta encontrada")
+    return pergunta
+
 @router.post("/", 
     summary="Criar nova pergunta",
     description="Cria uma nova pergunta que pode ser respondida pelos usuários nos totens. O ID é gerado automaticamente.",
@@ -72,26 +103,6 @@ def listar_perguntas():
     description="Retorna a última pergunta criada no sistema.",
     response_description="Dados da última pergunta"
 )
-def obter_ultima_pergunta():
-    """
-    ## ⏮️ Obter Última Pergunta Criada
-
-    Retorna a última pergunta criada no sistema.
-
-    ### Resposta de exemplo:
-
-    ```json
-    {
-        "pergunta_id": "pergunta005",
-        "texto": "Como você avalia nosso serviço?"
-    }
-    ```
-    """
-    pergunta = service.obter_ultima_pergunta()
-    if not pergunta:
-        # Retorna 404 de forma controlada
-        raise HTTPException(status_code=404, detail="Nenhuma pergunta encontrada")
-    return pergunta
 
 @router.get("/{pergunta_id}", 
     summary="Buscar pergunta por ID",
