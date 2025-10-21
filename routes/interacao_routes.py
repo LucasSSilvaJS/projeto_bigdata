@@ -115,6 +115,38 @@ def excluir_interacoes_por_pergunta(pergunta_id: str):
     """
     return service.excluir_interacoes_por_pergunta(pergunta_id)
 
+@router.get("/verificar", 
+    summary="Verificar interação do usuário",
+    description="Verifica se um usuário já interagiu com uma pergunta específica.",
+    response_description="Resultado da verificação")
+def verificar_interacao(
+    vem_hash: str = Query(..., description="Hash único do usuário", example="user123"),
+    pergunta_id: str = Query(..., description="ID da pergunta", example="pergunta001")
+):
+    """
+    ## ✅ Verificar Interação do Usuário
+
+    Verifica se um usuário já interagiu com uma pergunta específica.
+
+    ### Parâmetros:
+    - **vem_hash** (string): Hash único do usuário
+    - **pergunta_id** (string): ID da pergunta
+
+    ### Exemplo de uso:
+    ```
+    GET /interacoes/verificar?vem_hash=user123&pergunta_id=pergunta001
+    ```
+
+    ### Resposta:
+    ```json
+    {
+        "interagiu": true
+    }
+    ```
+    """
+    interagiu = service.verificar_interacao(vem_hash, pergunta_id)
+    return {"interagiu": interagiu}
+
 @router.get("/score/{pergunta_id}", 
     summary="Obter score de uma pergunta",
     description="Calcula e retorna o score de uma pergunta específica com base nas interações registradas.",

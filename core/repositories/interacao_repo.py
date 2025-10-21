@@ -36,3 +36,9 @@ class InteracaoRepository:
     
     def delete_by_pergunta_id(self, pergunta_id):
         self.collection.delete_many({"pergunta_id": pergunta_id})
+
+    #verificar se o usuário já interagiu com a pergunta
+    def has_interacted(self, vem_hash, pergunta_id):
+        return self.collection.find_one(
+            {"vem_hash": vem_hash, "pergunta_id": pergunta_id}
+        ) is not None

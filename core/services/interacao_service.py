@@ -19,5 +19,7 @@ class InteracaoService:
     def excluir_interacoes_por_pergunta(self, pergunta_id):
         self.repo.delete_by_pergunta_id(pergunta_id)
         return {"mensagem": "Interações removidas com sucesso"}
-
+    
+    def verificar_interacao(self, vem_hash, pergunta_id):
+        return self.repo.has_interacted(vem_hash, pergunta_id)
     
