@@ -87,3 +87,30 @@ def listar_interacoes():
     - Dashboards de Big Data
     """
     return service.listar_interacoes()
+
+@router.get("/score/{pergunta_id}",
+    summary="Obter score de respostas para uma pergunta",
+    description="Retorna o score percentual de respostas 'sim' e 'não' para uma pergunta específica.",
+    response_description="Score de respostas")  
+def obter_score(pergunta_id: str):
+    """
+    ## 📊 Obter Score de Respostas para uma Pergunta
+    Retorna o score percentual de respostas "sim" e "não" para uma pergunta específica.
+    ### Parâmetros:
+    - **pergunta_id** (string): ID da pergunta para a qual o score será calculado
+    ### Exemplo de uso:
+    ```
+    GET /interacoes/score/pergunta001
+    ```
+    ### Resposta:
+    ```json
+    {
+        "sim": 75.0,
+        "não": 25.0
+    }
+    ```
+    """
+    score = service.obter_score(pergunta_id)
+    if not score:
+        raise HTTPException(status_code=404, detail="Nenhuma interação encontrada para a pergunta especificada")
+    return score

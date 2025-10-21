@@ -17,3 +17,24 @@ class InteracaoRepository:
 
     def get_all(self):
         return list(self.collection.find({}, {"_id": 0}))
+    
+    # obter resultado de numero de sim ou não em percentual de acordo com o pergunta_id
+    def get_score(self, pergunta_id):
+        pipeline = [
+            {"$match": {"pergunta_id": pergunta_id}},
+            {
+                "$group": {
+                    "_id": "$resposta",
+                    "count": {"$sum": 1}
+                }
+            }
+        ]
+        results = list(self.collection.aggregate(pipeline))
+        total = sum(item['count'] for item in results)
+        score = {}
+        for item in results:
+            resposta = item['_id']
+            count = item['count']
+            percentage = (count / total) * 100 if total > 0 else 0
+            score[resposta] = percentage
+        return score

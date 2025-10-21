@@ -12,3 +12,6 @@ class InteracaoService:
 
     def listar_interacoes(self):
         return self.repo.get_all()
+
+    def obter_score(self, pergunta_id):
+        return self.repo.get_score(pergunta_id)

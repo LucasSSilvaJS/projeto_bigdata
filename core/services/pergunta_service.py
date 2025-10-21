@@ -13,12 +13,13 @@ class PerguntaService:
     def listar_perguntas(self):
         return self.repo.get_all()
 
+    def buscar_ultima_pergunta(self):
+        return self.repo.get_last()
+    
     def buscar_pergunta(self, pergunta_id):
         return self.repo.get_by_id(pergunta_id)
-    
-    def obter_ultima_pergunta(self):
-        return self.repo.get_last()
 
     def excluir_pergunta(self, pergunta_id):
         self.repo.delete(pergunta_id)
         return {"mensagem": "Pergunta removida com sucesso"}
+    
