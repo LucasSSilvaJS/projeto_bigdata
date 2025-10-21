@@ -29,7 +29,7 @@ class InteracaoRepository:
             }
         ]
         results = self.collection.aggregate(pipeline)
-        score = {"sim": 0, "não": 0}
+        score = {"sim": 0, "nao": 0}
         for result in results:
             score[result["_id"]] = result["count"]
         return score

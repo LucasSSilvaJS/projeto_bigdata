@@ -20,7 +20,7 @@ def criar_interacao(
     vem_hash: str = Query(..., description="Hash único do usuário", example="user123"),
     pergunta_id: str = Query(..., description="ID da pergunta respondida", example="pergunta001"),
     totem_id: str = Query(..., description="ID do totem onde ocorreu a interação", example="totem001"),
-    resposta: str = Query(..., description="Resposta do usuário (sim ou não)", example="sim")
+    resposta: str = Query(..., description="Resposta do usuário (sim ou nao)", example="sim")
 ):
     """
     ## 🔄 Registrar Nova Interação
@@ -31,7 +31,7 @@ def criar_interacao(
     - **vem_hash** (string): Hash único do usuário
     - **pergunta_id** (string): ID da pergunta respondida
     - **totem_id** (string): ID do totem onde ocorreu a interação
-    - **resposta** (string): Resposta do usuário ("sim" ou "não")
+    - **resposta** (string): Resposta do usuário ("sim" ou "nao")
     
     ### Exemplo de uso:
     ```
@@ -49,11 +49,11 @@ def criar_interacao(
     ```
     
     ### Validações:
-    - A resposta deve ser exatamente "sim" ou "não"
+    - A resposta deve ser exatamente "sim" ou "nao"
     - O usuário, pergunta e totem devem existir no sistema
     """
-    if resposta not in ["sim", "não"]:
-        raise HTTPException(status_code=422, detail="Resposta deve ser 'sim' ou 'não'")
+    if resposta not in ["sim", "nao"]:
+        raise HTTPException(status_code=422, detail="Resposta deve ser 'sim' ou 'nao'")
     
     return service.registrar_interacao(vem_hash, pergunta_id, totem_id, resposta)
 
