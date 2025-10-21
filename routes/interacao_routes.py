@@ -88,6 +88,33 @@ def listar_interacoes():
     """
     return service.listar_interacoes()
 
+@router.delete("/pergunta/{pergunta_id}", 
+    summary="Excluir interações por pergunta",
+    description="Remove todas as interações associadas a uma pergunta específica.",
+    response_description="Interações removidas com sucesso")
+def excluir_interacoes_por_pergunta(pergunta_id: str):
+    """
+    ## 🗑️ Excluir Interações por Pergunta
+
+    Remove todas as interações associadas a uma pergunta específica.
+
+    ### Parâmetros:
+    - **pergunta_id** (string): Identificador único da pergunta
+
+    ### Exemplo de uso:
+    ```
+    DELETE /interacoes/pergunta/pergunta001
+    ```
+
+    ### Resposta:
+    ```json
+    {
+        "mensagem": "Interações removidas com sucesso"
+    }
+    ```
+    """
+    return service.excluir_interacoes_por_pergunta(pergunta_id)
+
 @router.get("/score/{pergunta_id}", 
     summary="Obter score de uma pergunta",
     description="Calcula e retorna o score de uma pergunta específica com base nas interações registradas.",

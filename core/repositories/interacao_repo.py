@@ -33,3 +33,6 @@ class InteracaoRepository:
         for result in results:
             score[result["_id"]] = result["count"]
         return score
+    
+    def delete_by_pergunta_id(self, pergunta_id):
+        self.collection.delete_many({"pergunta_id": pergunta_id})
