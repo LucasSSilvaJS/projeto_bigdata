@@ -46,7 +46,7 @@ app = FastAPI(
             "description": "Servidor de Desenvolvimento"
         },
         {
-            "url": "https://api.projeto-bigdata.com",
+            "url": "https://projeto-bigdata.onrender.com/",
             "description": "Servidor de Produção"
         }
     ]
