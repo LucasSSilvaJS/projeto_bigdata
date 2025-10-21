@@ -12,28 +12,27 @@ router = APIRouter(
 )
 service = UsuarioService()
 
-@router.post("/", 
+#criar usuário pelo path pelo menos metodo do get by id
+@router.post("/{vem_hash}", 
     summary="Criar novo usuário",
-    description="Cria um novo usuário no sistema identificado por um hash único.",
+    description="Cria um novo usuário no sistema com um hash único.",
     response_description="Usuário criado com sucesso")
-def criar_usuario(vem_hash: str = Query(..., description="Hash único que identifica o usuário", example="user123")):
+def criar_usuario(vem_hash: str = Query(..., description="Hash único do usuário", example="user123")):
     """
-    ## 📝 Criar Novo Usuário
-    
-    Cria um novo usuário no sistema usando um hash único como identificador.
-    
+    ## 👤 Criar Novo Usuário
+    Cria um novo usuário no sistema com um hash único.
+
     ### Parâmetros:
     - **vem_hash** (string): Hash único do usuário
-    
+
     ### Exemplo de uso:
     ```
-    POST /usuarios/?vem_hash=cliente001
+    POST /usuarios/user123
     ```
-    
     ### Resposta:
     ```json
     {
-        "vem_hash": "cliente001"
+        "vem_hash": "user123"
     }
     ```
     """
