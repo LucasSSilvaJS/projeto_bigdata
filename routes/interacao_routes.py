@@ -1,9 +1,8 @@
 from fastapi import APIRouter, Query, HTTPException
 from core.services.interacao_service import InteracaoService
-from typing import List, Dict, Any
 
 router = APIRouter(
-    prefix="/interacoes", 
+    prefix="/interacoes",
     tags=["🔄 Interações"],
     responses={
         404: {"description": "Recurso não encontrado"},
@@ -52,10 +51,10 @@ def criar_interacao(
     - A resposta deve ser exatamente "sim" ou "nao"
     - O usuário, pergunta e totem devem existir no sistema
     """
-    if resposta not in ["sim", "nao"]:
-        raise HTTPException(status_code=422, detail="Resposta deve ser 'sim' ou 'nao'")
-    
-    return service.registrar_interacao(vem_hash, pergunta_id, totem_id, resposta)
+    try:
+        return service.registrar_interacao(vem_hash, pergunta_id, totem_id, resposta)
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
 
 @router.get("/", 
     summary="Listar todas as interações",
@@ -113,7 +112,10 @@ def excluir_interacoes_por_pergunta(pergunta_id: str):
     }
     ```
     """
-    return service.excluir_interacoes_por_pergunta(pergunta_id)
+    try:
+        return service.excluir_interacoes_por_pergunta(pergunta_id)
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
 
 @router.get("/verificar", 
     summary="Verificar interação do usuário",
@@ -144,8 +146,11 @@ def verificar_interacao(
     }
     ```
     """
-    interagiu = service.verificar_interacao(vem_hash, pergunta_id)
-    return {"interagiu": interagiu}
+    try:
+        interagiu = service.verificar_interacao(vem_hash, pergunta_id)
+        return {"interagiu": interagiu}
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
 
 @router.get("/score/{pergunta_id}", 
     summary="Obter score de respostas para uma pergunta",
@@ -154,6 +159,7 @@ def verificar_interacao(
 def obter_score(pergunta_id: str):
     """
     ## 📊 Obter Score de Respostas para uma Pergunta
+
     Calcula o percentual de respostas 'sim' e 'nao' para uma pergunta específica.
 
     ### Parâmetros:
@@ -172,4 +178,7 @@ def obter_score(pergunta_id: str):
     }
     ```
     """
-    return service.obter_score(pergunta_id)
+    try:
+        return service.obter_score(pergunta_id)
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
