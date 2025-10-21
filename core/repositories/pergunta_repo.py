@@ -12,10 +12,21 @@ class PerguntaRepository:
         )
 
     def get_last(self):
-        return self.collection.find_one(
-            sort=[("pergunta_id", -1)], 
-            projection={"_id": 0}
-        )
+        try:
+            # Busca o último documento ordenando por pergunta_id
+            resultado = self.collection.find_one(
+                sort=[("pergunta_id", -1)], 
+                projection={"_id": 0}
+            )
+            if not resultado:
+                return None
+            # Garantir que exista a chave 'texto'
+            if "texto" not in resultado:
+                resultado["texto"] = "Pergunta sem texto"
+            return resultado
+        except Exception as e:
+            print("Erro get_last:", e)
+            return None
 
     def get_all(self):
         return list(self.collection.find({}, {"_id": 0}))

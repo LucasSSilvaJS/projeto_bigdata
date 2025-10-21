@@ -66,17 +66,19 @@ def listar_perguntas():
     """
     return service.listar_perguntas()
 
-@router.get("/ultima", 
+@router.get(
+    "/ultima", 
     summary="Obter última pergunta criada",
     description="Retorna a última pergunta criada no sistema.",
-    response_description="Dados da última pergunta")
+    response_description="Dados da última pergunta"
+)
 def obter_ultima_pergunta():
     """
     ## ⏮️ Obter Última Pergunta Criada
 
     Retorna a última pergunta criada no sistema.
 
-    ### Resposta:
+    ### Resposta de exemplo:
 
     ```json
     {
@@ -87,6 +89,7 @@ def obter_ultima_pergunta():
     """
     pergunta = service.obter_ultima_pergunta()
     if not pergunta:
+        # Retorna 404 de forma controlada
         raise HTTPException(status_code=404, detail="Nenhuma pergunta encontrada")
     return pergunta
 
