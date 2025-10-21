@@ -18,6 +18,7 @@ class InteracaoRepository:
     def get_all(self):
         return list(self.collection.find({}, {"_id": 0}))
     
+    #transforme o score em percentual de respostas "sim" e "não"
     def get_score(self, pergunta_id):
         pipeline = [
             {"$match": {"pergunta_id": pergunta_id}},
@@ -28,10 +29,14 @@ class InteracaoRepository:
                 }
             }
         ]
-        results = self.collection.aggregate(pipeline)
+        results = list(self.collection.aggregate(pipeline))
+        total = sum(item['count'] for item in results)
         score = {"sim": 0, "nao": 0}
-        for result in results:
-            score[result["_id"]] = result["count"]
+        for item in results:
+            if item['_id'] == "sim":
+                score["sim"] = (item['count'] / total) * 100
+            elif item['_id'] == "nao":
+                score["nao"] = (item['count'] / total) * 100
         return score
     
     def delete_by_pergunta_id(self, pergunta_id):

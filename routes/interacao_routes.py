@@ -148,14 +148,13 @@ def verificar_interacao(
     return {"interagiu": interagiu}
 
 @router.get("/score/{pergunta_id}", 
-    summary="Obter score de uma pergunta",
-    description="Calcula e retorna o score de uma pergunta específica com base nas interações registradas.",
-    response_description="Score da pergunta")
+    summary="Obter score de respostas para uma pergunta",
+    description="Calcula o percentual de respostas 'sim' e 'nao' para uma pergunta específica.",
+    response_description="Score de respostas")
 def obter_score(pergunta_id: str):
     """
-    ## 📊 Obter Score de uma Pergunta
-
-    Calcula e retorna o score de uma pergunta específica com base nas interações registradas.
+    ## 📊 Obter Score de Respostas para uma Pergunta
+    Calcula o percentual de respostas 'sim' e 'nao' para uma pergunta específica.
 
     ### Parâmetros:
     - **pergunta_id** (string): Identificador único da pergunta
@@ -164,15 +163,13 @@ def obter_score(pergunta_id: str):
     ```
     GET /interacoes/score/pergunta001
     ```
+
     ### Resposta:
     ```json
     {
-        "pergunta_id": "pergunta001",
-        "score": 75.0
+        "sim": 75.0,
+        "nao": 25.0
     }
     ```
     """
-    score = service.obter_score(pergunta_id)
-    if score is None:
-        raise HTTPException(status_code=404, detail="Pergunta não encontrada ou sem interações")
-    return {"pergunta_id": pergunta_id, "score": score}
+    return service.obter_score(pergunta_id)
