@@ -11,6 +11,12 @@ class PerguntaRepository:
             upsert=True
         )
 
+    def get_last(self):
+        return self.collection.find_one(
+            sort=[("pergunta_id", -1)], 
+            projection={"_id": 0}
+        )
+
     def get_all(self):
         return list(self.collection.find({}, {"_id": 0}))
 

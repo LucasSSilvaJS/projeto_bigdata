@@ -15,6 +15,9 @@ class PerguntaService:
 
     def buscar_pergunta(self, pergunta_id):
         return self.repo.get_by_id(pergunta_id)
+    
+    def obter_ultima_pergunta(self):
+        return self.repo.get_last()
 
     def excluir_pergunta(self, pergunta_id):
         self.repo.delete(pergunta_id)
