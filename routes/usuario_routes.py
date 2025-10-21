@@ -12,6 +12,26 @@ router = APIRouter(
 )
 service = UsuarioService()
 
+@router.get("/", 
+    summary="Listar todos os usuários",
+    description="Retorna uma lista com todos os usuários cadastrados no sistema.",
+    response_description="Lista de usuários")
+def listar_usuarios():
+    """
+    ## 📋 Listar Todos os Usuários
+    
+    Retorna uma lista com todos os usuários cadastrados no sistema.
+    
+    ### Resposta:
+    ```json
+    [
+        {"vem_hash": "user123"},
+        {"vem_hash": "user456"}
+    ]
+    ```
+    """
+    return service.listar_usuarios()
+
 @router.post("/{vem_hash}", 
     summary="Criar novo usuário",
     description="Cria um novo usuário no sistema identificado por um hash único.",
@@ -42,26 +62,6 @@ def criar_usuario(vem_hash: str):
     if existing_user:
         raise HTTPException(status_code=422, detail="Usuário já existe")
     return service.criar_usuario(vem_hash)
-
-@router.get("/", 
-    summary="Listar todos os usuários",
-    description="Retorna uma lista com todos os usuários cadastrados no sistema.",
-    response_description="Lista de usuários")
-def listar_usuarios():
-    """
-    ## 📋 Listar Todos os Usuários
-    
-    Retorna uma lista com todos os usuários cadastrados no sistema.
-    
-    ### Resposta:
-    ```json
-    [
-        {"vem_hash": "user123"},
-        {"vem_hash": "user456"}
-    ]
-    ```
-    """
-    return service.listar_usuarios()
 
 @router.get("/{vem_hash}", 
     summary="Buscar usuário por hash",
