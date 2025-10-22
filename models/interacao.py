@@ -1,7 +1,7 @@
 class Interacao:
     def __init__(self, vem_hash: str, pergunta_id: str, totem_id: str, resposta: str):
-        if resposta not in ["sim", "não"]:
-            raise ValueError("Resposta deve ser 'sim' ou 'não'")
+        if resposta not in ["sim", "nao"]:
+            raise ValueError("Resposta deve ser 'sim' ou 'nao'")
 
         self.vem_hash = vem_hash
         self.pergunta_id = pergunta_id
