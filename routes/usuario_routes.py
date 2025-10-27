@@ -121,3 +121,34 @@ def excluir_usuario(vem_hash: str):
     ```
     """
     return service.excluir_usuario(vem_hash)
+
+@router.patch("/{vem_hash}/pontuacao",
+    summary="Atualizar pontuação do usuário",
+    description="Atualiza a pontuação de um usuário específico.",
+    response_description="Pontuação atualizada com sucesso")
+def atualizar_pontuacao(vem_hash: str, pontos: int = Query(..., description="Número de pontos a adicionar ou subtrair")):
+    """
+    ## ⚙️ Atualizar Pontuação do Usuário
+    Atualiza a pontuação de um usuário específico.
+
+    ### Parâmetros:
+    - **vem_hash** (string): Hash único do usuário
+    - **pontos** (int): Número de pontos a adicionar (positivo) ou subtrair (negativo)
+
+    ### Exemplo de uso:
+    ```
+    PATCH /usuarios/user123/pontuacao?pontos=10
+    ```
+    
+    ### Resposta:
+    ```json
+    {
+        "vem_hash": "user123",
+        "pontuacao": 40
+    }
+    ```
+    """
+    resultado = service.atualizar_pontuacao(vem_hash, pontos)
+    if not resultado:
+        raise HTTPException(status_code=404, detail="Usuário não encontrado")
+    return resultado

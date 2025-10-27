@@ -22,3 +22,9 @@ class UsuarioRepository:
 
     def delete(self, vem_hash):
         self.collection.delete_one({"vem_hash": vem_hash})
+
+    def set_points(self, vem_hash, points):
+        self.collection.update_one(
+            {"vem_hash": vem_hash},
+            {"$set": {"pontuacao": points}}
+        )
