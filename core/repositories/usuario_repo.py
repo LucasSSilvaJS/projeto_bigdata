@@ -6,7 +6,10 @@ class UsuarioRepository:
 
     def save(self, usuario):
         self.collection.update_one(
-            {"vem_hash": usuario.vem_hash},
+            {
+                "vem_hash": usuario.vem_hash,
+                "pontuacao": usuario.pontuacao
+            },
             {"$set": usuario.to_dict()},
             upsert=True
         )

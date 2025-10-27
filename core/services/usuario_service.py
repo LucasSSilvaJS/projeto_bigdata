@@ -6,7 +6,7 @@ class UsuarioService:
         self.repo = UsuarioRepository()
 
     def criar_usuario(self, vem_hash):
-        usuario = Usuario(vem_hash)
+        usuario = Usuario(vem_hash, pontuacao=0)
         self.repo.save(usuario)
         return usuario.to_dict()
 

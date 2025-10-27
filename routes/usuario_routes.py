@@ -25,8 +25,8 @@ def listar_usuarios():
     ### Resposta:
     ```json
     [
-        {"vem_hash": "user123"},
-        {"vem_hash": "user456"}
+        {"vem_hash: 123", pontuacao: 10},
+        {"vem_hash: 456", pontuacao: 20}
     ]
     ```
     """
@@ -53,7 +53,8 @@ def criar_usuario(vem_hash: str):
     ### Resposta:
     ```json
     {
-        "vem_hash": "cliente001"
+        "vem_hash": "cliente001",
+        "pontuacao": 0
     }
     ```
     """
@@ -84,7 +85,8 @@ def buscar_usuario(vem_hash: str):
     ### Resposta:
     ```json
     {
-        "vem_hash": "user123"
+        "vem_hash": "user123",
+        "pontuacao": 30
     }
     ```
     """
