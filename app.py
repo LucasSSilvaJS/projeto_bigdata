@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes import usuario_routes, pergunta_routes, totem_routes, interacao_routes
+from routes import usuario_routes, pergunta_routes, totem_routes, interacao_routes, thanos_routes
 
 app = FastAPI(
     title="API de Interações - Projeto Big Data",
@@ -66,6 +66,7 @@ app.include_router(usuario_routes.router)
 app.include_router(pergunta_routes.router)
 app.include_router(totem_routes.router)
 app.include_router(interacao_routes.router)
+app.include_router(thanos_routes.router)
 
 @app.get("/", tags=["🏠 Início"])
 async def root():
@@ -97,13 +98,15 @@ async def root():
             "usuarios": "/usuarios/",
             "totens": "/totens/",
             "perguntas": "/perguntas/",
-            "interacoes": "/interacoes/"
+            "interacoes": "/interacoes/",
+            "thanos": "/thanos/estalando"
         },
         "examples": {
             "criar_usuario": "POST /usuarios/?vem_hash=exemplo123",
             "criar_totem": "POST /totens/?totem_id=totem001&latitude=-23.5505&longitude=-46.6333",
             "criar_pergunta": "POST /perguntas/?pergunta_id=pergunta001&texto=Você gostou do atendimento?",
-            "criar_interacao": "POST /interacoes/?vem_hash=exemplo123&pergunta_id=pergunta001&totem_id=totem001&resposta=sim"
+            "criar_interacao": "POST /interacoes/?vem_hash=exemplo123&pergunta_id=pergunta001&totem_id=totem001&resposta=sim",
+            "thanos_estalo": "POST /thanos/estalando"
         }
     }
 
