@@ -122,11 +122,11 @@ def excluir_usuario(vem_hash: str):
     """
     return service.excluir_usuario(vem_hash)
 
-@router.patch("/{vem_hash}/pontuacao",
+@router.patch("/{vem_hash}/pontuacao/{pontos}",
     summary="Atualizar pontuação do usuário",
     description="Atualiza a pontuação de um usuário específico.",
     response_description="Pontuação atualizada com sucesso")
-def atualizar_pontuacao(vem_hash: str, pontos: int = Query(..., description="Número de pontos a adicionar ou subtrair")):
+def atualizar_pontuacao(vem_hash: str, pontos: int):
     """
     ## ⚙️ Atualizar Pontuação do Usuário
     Atualiza a pontuação de um usuário específico.
