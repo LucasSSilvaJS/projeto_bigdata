@@ -75,49 +75,6 @@ def buscar_ultima_pergunta():
         raise HTTPException(status_code=404, detail="Nenhuma pergunta encontrada")
     return pergunta
 
-@router.get(
-    "/ultimas",
-    summary="Obter as últimas perguntas",
-    description="Retorna as últimas N perguntas criadas no sistema, ordenadas da mais recente para a mais antiga.",
-    response_description="Lista das últimas perguntas"
-)
-def buscar_ultimas_perguntas(
-    limite: int = Query(default=5, ge=1, le=100, description="Número de perguntas a retornar (padrão: 5)")
-):
-    """
-    ## 🕑 Obter Últimas Perguntas
-    
-    Retorna as últimas N perguntas criadas no sistema, ordenadas da mais recente para a mais antiga.
-    
-    ### Parâmetros:
-    - **limite** (int, opcional): Número de perguntas a retornar (padrão: 5, mínimo: 1, máximo: 100)
-    
-    ### Exemplo de uso:
-    ```
-    GET /perguntas/ultimas?limite=5
-    ```
-    
-    ### Resposta:
-    ```json
-    [
-        {
-            "pergunta_id": "b2c3d4e5f6a1",
-            "texto": "Você ficou satisfeito com nosso atendimento?",
-            "data_criacao": "2025-01-13T02:30:00.123456"
-        },
-        {
-            "pergunta_id": "a1b2c3d4e5f6",
-            "texto": "O produto atendeu suas expectativas?",
-            "data_criacao": "2025-01-12T15:20:00.123456"
-        }
-    ]
-    ```
-    """
-    perguntas = service.buscar_ultimas_perguntas(limite)
-    if not perguntas:
-        raise HTTPException(status_code=404, detail="Nenhuma pergunta encontrada")
-    return perguntas
-
 @router.get("/", 
     summary="Listar todas as perguntas",
     description="Retorna uma lista com todas as perguntas cadastradas no sistema.",

@@ -17,10 +17,6 @@ class PerguntaRepository:
     def get_last(self):
         return self.collection.find_one(sort=[("data_criacao", -1)], projection={"_id": 0})
 
-    def get_last_n(self, limit=5):
-        """Retorna as últimas N perguntas ordenadas por data de criação"""
-        return list(self.collection.find({}, {"_id": 0}).sort("data_criacao", -1).limit(limit))
-
     def get_by_id(self, pergunta_id):
         return self.collection.find_one({"pergunta_id": pergunta_id}, {"_id": 0})
 

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes import usuario_routes, pergunta_routes, totem_routes, interacao_routes, thanos_routes
+from routes import usuario_routes, pergunta_routes, totem_routes, interacao_routes, thanos_routes, servico_routes
 
 app = FastAPI(
     title="API de Interações - Projeto Big Data",
@@ -12,26 +12,30 @@ app = FastAPI(
     
     ### 🎯 Funcionalidades
     
-    * **Usuários**: Gerenciamento de usuários identificados por hash único
+    * **Usuários**: Gerenciamento de usuários identificados por hash único com gamificação
     * **Totens**: Dispositivos físicos com localização geográfica
-    * **Perguntas**: Sistema de perguntas personalizáveis
+    * **Serviços Públicos**: Mapeamento de órgãos públicos próximos aos totens
+    * **Perguntas**: Sistema de pesquisas públicas sobre a cidade
     * **Interações**: Registro de respostas dos usuários ("sim" ou "não")
     
     ### 📊 Casos de Uso
     
-    * Análise de satisfação do cliente
+    * Pesquisas de opinião pública sobre temas da cidade
+    * Mapeamento e avaliação de serviços públicos
     * Análise geográfica de interações
     * Análise temporal de padrões de uso
+    * Gamificação para engajamento dos cidadãos
     * Coleta de dados para Big Data
     
     ### 🔧 Tecnologias
     
     * **FastAPI** - Framework web moderno
-    * **MongoDB** - Banco de dados NoSQL
+    * **MongoDB Atlas** - Banco de dados NoSQL em cloud
+    * **Pydantic** - Validação de dados
     * **Uvicorn** - Servidor ASGI
     * **Python 3.13+** - Linguagem de programação
     """,
-    version="1.0.0",
+    version="2.0.0",
     contact={
         "name": "Equipe de Desenvolvimento",
         "email": "dev@projeto-bigdata.com",
@@ -65,6 +69,7 @@ app.add_middleware(
 app.include_router(usuario_routes.router)
 app.include_router(pergunta_routes.router)
 app.include_router(totem_routes.router)
+app.include_router(servico_routes.router)  # NOVO!
 app.include_router(interacao_routes.router)
 app.include_router(thanos_routes.router)
 
@@ -73,7 +78,7 @@ async def root():
     """
     ## 🏠 Página Inicial da API
     
-    Bem-vindo à API de Interações! Aqui você pode gerenciar usuários, totens, perguntas e interações.
+    Bem-vindo à API de Interações! Aqui você pode gerenciar usuários, totens, serviços públicos, perguntas e interações.
     
     ### 📋 Links Úteis:
     * **Documentação Swagger**: [/docs](/docs)
@@ -87,7 +92,7 @@ async def root():
     """
     return {
         "message": "🚀 API de Interações - Projeto Big Data",
-        "version": "1.0.0",
+        "version": "2.0.0",
         "status": "✅ Funcionando perfeitamente",
         "docs": {
             "swagger_ui": "/docs",
@@ -97,16 +102,28 @@ async def root():
         "endpoints": {
             "usuarios": "/usuarios/",
             "totens": "/totens/",
+            "servicos": "/servicos/",
             "perguntas": "/perguntas/",
             "interacoes": "/interacoes/",
             "thanos": "/thanos/estalando"
         },
         "examples": {
-            "criar_usuario": "POST /usuarios/?vem_hash=exemplo123",
-            "criar_totem": "POST /totens/?totem_id=totem001&latitude=-23.5505&longitude=-46.6333",
-            "criar_pergunta": "POST /perguntas/?pergunta_id=pergunta001&texto=Você gostou do atendimento?",
-            "criar_interacao": "POST /interacoes/?vem_hash=exemplo123&pergunta_id=pergunta001&totem_id=totem001&resposta=sim",
+            "verificar_usuario": "POST /usuarios/verificar/abc123",
+            "cadastrar_usuario": "POST /usuarios/cadastrar",
+            "criar_totem": "POST /totens/",
+            "criar_servico": "POST /servicos/",
+            "importar_servicos": "POST /servicos/importar-csv",
+            "servicos_proximos": "GET /servicos/proximos-totem/totem123?raio_km=5",
+            "criar_pergunta": "POST /perguntas/",
+            "criar_interacao": "POST /interacoes/",
             "thanos_estalo": "POST /thanos/estalando"
+        },
+        "novidades_v2": {
+            "gamificacao": "Sistema de pontos e níveis para usuários",
+            "servicos_publicos": "Mapeamento de órgãos públicos próximos aos totens",
+            "cadastro_completo": "Nome, email e data de nascimento dos usuários",
+            "importacao_massa": "Importar serviços via Excel/CSV",
+            "analytics": "Estatísticas de idade, ranking e muito mais"
         }
     }
 
@@ -121,5 +138,5 @@ async def health_check():
     return {
         "status": "healthy",
         "message": "API funcionando perfeitamente",
-        "version": "1.0.0"
+        "version": "2.0.0"
     }
