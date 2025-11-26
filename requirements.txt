@@ -3,3 +3,6 @@ uvicorn
 pymongo
 python-dotenv
 pydantic
+email-validator
+python-multipart
+openpyxl
